@@ -1,0 +1,151 @@
+// COLORS + LIGHTER VERSION SUBCOLORS
+// (unfortunately I didn't find a way for these colors to make the lighter versions with a single formula)
+
+$confirmation-color: rgb(51, 130, 79);
+$confirmation-bg-color: lighten($confirmation-color, 62);
+$pending-color: rgb(24, 5, 99);
+$pending-bg-color: lighten($pending-color, 75);
+$rejected-color: rgb(208, 19, 27);
+$rejected-bg-color: lighten($rejected-color, 52);
+
+// BASE-SIZE FOR RESPONSIVITY CALCULATION
+// (I think it works nicely within 16-24px range)
+
+$base-size: 18px;
+
+// BREAKPOINTS FOR DIFFERENT SIZED DEVICES
+
+$breakpoint-extrasmall-device: 'only screen and (max-width: 320px)';
+$breakpoint-tablet: 'only screen and (min-width: 480px)';
+$breakpoint-desktop: 'only screen and (min-width: 780px)';
+
+// ALERT COMPONENT CONTAINER STYLING
+
+@mixin alert($color, $bgcolor) {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: $base-size * 0.8;
+    font-weight: bold;
+    color: $color;
+    background-color: $bgcolor;
+    padding: 16px;
+    border-left: 4px solid $color;
+    border-radius: 4px;
+    margin: auto;
+    @media #{$breakpoint-extrasmall-device} {
+        width: 90%;
+        font-size: $base-size * 0.6;
+        padding: 12px;
+    }
+    @media #{$breakpoint-tablet} {
+        width: 80%;
+        font-size: $base-size;
+        padding: 28px;
+    }
+}
+
+// SYMBOL CONTAINER STYLING
+
+@mixin symbol($color, $bgcolor) {
+    flex-shrink: 0;
+    width: $base-size;
+    height: $base-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $base-size;
+    color: $color;
+    background-color: $bgcolor;
+    padding: $base-size * 0.5;
+    border-radius: 50%;
+    margin-right: $base-size;
+    @media #{$breakpoint-extrasmall-device} {
+        width: $base-size * 0.8;
+        height: $base-size * 0.8;
+        font-size: $base-size * 0.8;
+    }
+    @media #{$breakpoint-tablet} {
+        width: $base-size * 1.5;
+        height: $base-size * 1.5;
+        font-size: $base-size * 1.5;
+        margin-right: $base-size * 2;
+    }
+}
+
+// CONFIRMATION COMPONENT STYLES
+
+.alert-confirmation {
+    @include alert($confirmation-color, $confirmation-bg-color);
+}
+.alert-confirmation > div:first-child {
+    @include symbol(white, $confirmation-color);
+}
+
+// PENDING COMPONENT STYLES
+
+.alert-pending {
+    @include alert($pending-color, $pending-bg-color);
+}
+.alert-pending > div:first-child {
+    @include symbol(black, white);
+    font-size: $base-size * 0.7;
+    font-weight: normal;
+    box-shadow: 0 0 0 $base-size / 4 darken($pending-bg-color, 4),
+                0 0 0 $base-size / 2 darken($pending-bg-color, 2);
+    @media #{$breakpoint-extrasmall-device} {
+        font-size: $base-size * 0.5;
+    }
+    @media #{$breakpoint-tablet} {
+        font-size: $base-size;
+        box-shadow: 0 0 0 $base-size / 2 darken($pending-bg-color, 4),
+                    0 0 0 $base-size darken($pending-bg-color, 2);
+    }
+}
+.alert-pending-additional-info {
+    font-size: $base-size * 0.5;
+    font-weight: normal;
+    color: black;
+    margin-top: $base-size / 4;
+    @media #{$breakpoint-tablet} {
+        font-size: $base-size * 0.8;
+        margin-top: $base-size / 2;
+    }
+}
+
+// REJECT COMPONENT STYLES
+
+.alert-rejected {
+    @include alert($rejected-color, $rejected-bg-color);
+}
+.alert-rejected > div:first-child {
+    @include symbol(white, $rejected-color);
+}
+.alert-rejected-text-container {
+    @media #{$breakpoint-desktop} {
+        display: flex;
+        align-items: baseline;
+    }
+}
+.alert-rejected-additional-info {
+    font-size: $base-size * 0.5;
+    font-weight: normal;
+    color: black;
+    @media #{$breakpoint-tablet} {
+        font-size: $base-size * 0.8;
+    }
+    @media #{$breakpoint-desktop} {
+        margin-left: 30px;
+    }
+}
+
+// MAKING RELOAD ICON NOT UNDERLINED
+// (could be useful for more occasions, otherwise inline styling might be an option)
+
+.no-underline {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    margin-right: 5px;
+}
